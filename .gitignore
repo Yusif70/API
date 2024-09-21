@@ -1,0 +1,10 @@
+/.vs/
+/.idea/
+API.App/bin/
+API.App/obj/
+API.Core/bin
+API.Core/obj
+API.Data/bin
+API.Data/obj
+API.Service/bin
+API.Service/obj
