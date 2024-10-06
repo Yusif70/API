@@ -7,7 +7,9 @@ namespace API.Service.Validations.Category
     {
         public CategoryPostDtoValidation()
         {
-            RuleFor(c => c.Name).NotEmpty();
+            RuleFor(c => c.Name)
+                .NotEmpty()
+                .NotNull();
         }
     }
 }

@@ -18,15 +18,6 @@ namespace API.Service.Services.Concretes
             _mapper = mapper;
             _repository = repository;
         }
-        public async Task<ApiResponse> Add(CategoryPostDto dto)
-        {
-            Category category = _mapper.Map<Category>(dto);
-            category.CreatedAt = DateTime.Now;
-            await _repository.AddAsync(category);
-            await _repository.SaveAsync();
-            return new ApiResponse { StatusCode = 200, Data = category, Message = "Category created successfully!" };
-        }
-
         public async Task<ApiResponse> GetAll()
         {
             List<Category> categories = await _repository.GetAll().ToListAsync();
@@ -43,23 +34,38 @@ namespace API.Service.Services.Concretes
             CategoryGetDto dto = _mapper.Map<CategoryGetDto>(category);
             return new ApiResponse { StatusCode = 200, Data = dto };
         }
-
-        public async Task<ApiResponse> Remove(Guid guid)
+        public async Task<ApiResponse> Add(CategoryPostDto dto)
         {
-            Category category = await _repository.GetByIdAsync(guid);
-            _repository.Remove(category);
+            Category category = _mapper.Map<Category>(dto);
+            category.CreatedAt = DateTime.Now;
+            await _repository.AddAsync(category);
             await _repository.SaveAsync();
-            return new ApiResponse { StatusCode = 204, Message = "Category deleted successfully!" };
+            return new ApiResponse { StatusCode = 200, Data = category, Message = "Category created successfully!" };
         }
 
         public async Task<ApiResponse> Update(Guid guid, CategoryPutDto dto)
         {
             Category updatedCategory = await _repository.GetByIdAsync(guid);
+            if (updatedCategory == null)
+            {
+                return new ApiResponse { StatusCode = 404, Message = "Category not found" };
+            }
             updatedCategory.Name = dto.Name;
             updatedCategory.LastUpdatedAt = DateTime.Now;
             _repository.Update(updatedCategory);
             await _repository.SaveAsync();
             return new ApiResponse { StatusCode = 204, Message = "Category updated successfully!" };
+        }
+        public async Task<ApiResponse> Remove(Guid guid)
+        {
+            Category category = await _repository.GetByIdAsync(guid);
+            if (category == null)
+            {
+                return new ApiResponse { StatusCode = 404, Message = "Category not found" };
+            }
+            _repository.Remove(category);
+            await _repository.SaveAsync();
+            return new ApiResponse { StatusCode = 204, Message = "Category deleted successfully!" };
         }
     }
 }

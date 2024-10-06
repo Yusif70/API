@@ -1,8 +1,7 @@
-﻿using API.Service.Dtos.Category;
-using API.Service.Services.Interfaces;
+﻿using API.Service.Services.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 
-namespace API.App.Controllers
+namespace API.App.Apps.User
 {
     [Route("api/[controller]")]
     [ApiController]
@@ -13,12 +12,7 @@ namespace API.App.Controllers
         {
             _categoryService = categoryService;
         }
-        [HttpPost("add")]
-        public async Task<IActionResult> Add(CategoryPostDto dto)
-        {
-            var res = await _categoryService.Add(dto);
-            return StatusCode(res.StatusCode, res.Message);
-        }
+
         [HttpGet]
         public async Task<IActionResult> GetAll()
         {
@@ -36,18 +30,5 @@ namespace API.App.Controllers
         //    Category category = await _repository.Get(c=>c.Id == id);
         //    return StatusCode(200, category);
         //}
-        [HttpDelete("{id}")]
-        public async Task<IActionResult> Remove(Guid id)
-        {
-            var res = await _categoryService.Remove(id);
-            return StatusCode(res.StatusCode, res.Message);
-        }
-
-        [HttpPut("{id}")]
-        public async Task<IActionResult> Update(Guid id, CategoryPutDto dto)
-        {
-            var res = await _categoryService.Update(id, dto);
-            return StatusCode(res.StatusCode, res.Message);
-        }
     }
 }
