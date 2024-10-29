@@ -6,9 +6,9 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace API.App.Apps.Admin
 {
-    [Route("api/[controller]")]
-    [ApiController]
     [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Roles = "Admin, SuperAdmin")]
+    [ApiController]
+    [Route("api/[controller]")]
     public class BlogsController : ControllerBase
     {
         private readonly IBlogService _blogService;

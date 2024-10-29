@@ -1,0 +1,29 @@
+﻿@model List<Category>
+<table class="table">
+    <thead>
+        <tr>
+            <th scope="col">Id</th>
+            <th scope="col">Name</th>
+            <th scope="col">Update</th>
+            <th scope="col">Delete</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var category in Model)
+        {
+            <tr>
+                <th scope="row">@category.Id</th>
+                <th>@category.Name</th>
+                <th>
+                    <a asp-controller="category" asp-action="update" asp-route-id="@category.Id" >
+                        <i class="fa-solid fa-pen text-warning"></i>
+                    </a>
+                </th>
+                <th>
+                    <a asp-controller="category" asp-action="delete" asp-route-id="@category.Id">
+                        <i class="fa-solid fa-trash text-danger"></i></a>
+                </th>
+            </tr>
+        }
+    </tbody>
+</table>
